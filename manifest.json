@@ -1,0 +1,20 @@
+{
+
+	"manifest_version": 2,
+	"name": "vrify",
+	"version": "0.1",
+
+	"description": "Adds virtual reality interface to your local filesystem.",
+
+	"icons": {
+		"48": "icons/border-48.png"
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["file:///*"],
+			"js": ["vrify.js"]
+		}
+	]
+
+}
