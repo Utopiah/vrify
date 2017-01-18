@@ -9,4 +9,5 @@ Adds virtual reality interface to your local filesystem.
 
 ## Limitations
 - tested only on Linux
-- traversal in VR works on on Firefox Nightly
+- traversal in VR works only on Firefox Nightly
+- replaces your normal file browsing mode
