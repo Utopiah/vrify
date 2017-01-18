@@ -23,6 +23,7 @@ for( index=0; index < x.length; index++ ) {
 scripts = [
 	"https://aframe.io/releases/0.4.0/aframe.min.js",
 	"https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js",
+	"https://321c4.github.io/aframe-link-demo/js/aframe-hyperlink.js",
 ];
 index = 0;
 for( index=0; index < scripts.length; index++ ) {
@@ -41,10 +42,24 @@ sky = document.createElement("a-sky");
 sky.setAttribute("color", "lightblue");
 scene.appendChild(sky);
 
+function addCamera(){
+	camera = document.createElement("a-camera");
+	camera.setAttribute("id", "camera");
+	camera.setAttribute("look-controls", "");
+	camera.setAttribute("wasd-controls", "");
+	scene.appendChild(camera);
+
+	ring = document.createElement("a-ring");
+	ring.setAttribute("radius-outer", "0.03");
+	ring.setAttribute("radius-inner", "0.02");
+	ring.setAttribute("cursor", "maxDistance: 30; fuse: true;");
+	camera.appendChild(ring);
+}
+
 // adding files, probably browser specific but for now focusing on Nightly for link traversal
 function addFiles(){
 	files = document.createElement("a-entity");
-	files.setAttribute("position", "0 0 -5");
+	files.setAttribute("position", "0 0 0");
 	files.setAttribute("layout", "type:cube");
 	files.setAttribute("id", "files");
 	scene.appendChild(files);
@@ -68,9 +83,23 @@ function addFiles(){
 	}
 }
 
+function addParentFolder(){
+	filename = (window.location+"..");
+	box = document.createElement("a-box");
+	box.setAttribute("color", "orange");
+	box.setAttribute("href", filename );
+	box.setAttribute("position", "0 4 -5");
+	text = document.createElement("a-entity");
+	text.setAttribute("bmfont-text", "text: "+filename);
+	text.setAttribute("position", "-0.5 0.5 0.5");
+	box.appendChild(text);
+	scene.appendChild(box);
+
+}
+
 function addFolders(){
 	folders = document.createElement("a-entity");
-	folders.setAttribute("position", "0 0.8 -5");
+	folders.setAttribute("position", "0 0.8 0");
 	folders.setAttribute("layout", "type:cube");
 	folders.setAttribute("id", "folders");
 	scene.appendChild(folders);
@@ -80,6 +109,7 @@ function addFolders(){
 	for( index=0; index < x.length; index++ ) {
 		box = document.createElement("a-box");
 		box.setAttribute("color", "brown");
+		box.setAttribute("href", x[index].href );
 		box.setAttribute("position", ""+index*1.1+" -1 -5");
 		folders.appendChild(box);
 		filename = x[index].href.replace(window.location,"");
@@ -114,7 +144,10 @@ if (scene.hasLoaded) {
 } else {
 	scene.addEventListener('loaded', run);
 }
+
 function run () {
+	addCamera();
 	addFiles();
 	addFolders();
+	addParentFolder();
 }
