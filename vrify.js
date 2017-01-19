@@ -22,8 +22,6 @@ for( index=0; index < x.length; index++ ) {
 // adding aframe and components
 scripts = [
 	"https://aframe.io/releases/0.4.0/aframe.min.js",
-	"https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js",
-	"https://321c4.github.io/aframe-link-demo/js/aframe-hyperlink.js",
 ];
 index = 0;
 for( index=0; index < scripts.length; index++ ) {
@@ -130,7 +128,10 @@ function addFolders(color){
  */
 function lateScripts(){
 	latescripts = [
+		"https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js",
+		"https://321c4.github.io/aframe-link-demo/js/aframe-hyperlink.js",
 		"https://rawgit.com/ngokevin/kframe/master/components/layout/dist/aframe-layout-component.min.js",
+			// somehow doesn't work
 	];
 	index = 0;
 	for( index=0; index < latescripts.length; index++ ) {
@@ -138,8 +139,9 @@ function lateScripts(){
 		script.setAttribute("src", latescripts[index]);
 		document.head.appendChild(script);
 	}
-	// somehow doesn't work
 }
+
+lateScripts();
 
 if (scene.hasLoaded) {
 	run();
