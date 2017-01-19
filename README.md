@@ -6,7 +6,7 @@ Adds virtual reality interface to your local filesystem.
 ![preview](https://vatelier.net/MyDemo/vrify/preview.jpg)
 
 ## Install
-1. [Get the latest xpi](https://vatelier.net/MyDemo/vrify/vrify.xpi)
+1. [Get the xpi](https://vatelier.net/MyDemo/vrify/vrify-0.2-an%2bfx.xpi)
 1. navigate to file:/// 
 
 ## Configuration

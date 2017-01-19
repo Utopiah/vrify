@@ -6,18 +6,46 @@
  *
  */
 
-// removing existing CSS
-var elements = document.querySelectorAll('link[rel=stylesheet]');
-for(var i=0;i<elements.length;i++){
-	    elements[i].parentNode.removeChild(elements[i]);
+
+function hideTraditionalView(){
+	// disabling existing CSS
+	var elements = document.querySelectorAll('link[rel=stylesheet]');
+	for(var i=0;i<elements.length;i++){
+		//elements[i].parentNode.removeChild(elements[i]);
+		elements[i].disabled = true;
+	}
+
+	// hidding all elements
+	let x = document.body.querySelectorAll('body > *');
+	let index = 0;
+	for( index=0; index < x.length; index++ ) {
+		x[index].style.display = "none";
+		//console.log(x[index], 'removed');
+	}
 }
 
-let x = document.body.querySelectorAll('body > *');
-let index = 0;
-for( index=0; index < x.length; index++ ) {
-	x[index].style.display = "none";
-	//console.log(x[index], 'removed');
+hideTraditionalView();
+/*
+function showTraditionalView(){
+	// enabling existing CSS
+	var elements = document.querySelectorAll('link[rel=stylesheet]');
+	for(var i=0;i<elements.length;i++){
+		elements[i].parentNode.removeChild(elements[i]);
+		elements[i].disabled = false;
+	}
+
+	// showing all elements
+	let x = document.body.querySelectorAll('body > *');
+	let index = 0;
+	for( index=0; index < x.length; index++ ) {
+		x[index].style.display = "inline";
+		//console.log(x[index], 'removed');
+	}
+
+	var x = document.body.querySelectorAll('[a-scene]');
+	x[0].style.display = "none";
 }
+*/
 
 // adding aframe and components
 scripts = [
@@ -40,6 +68,13 @@ sky = document.createElement("a-sky");
 sky.setAttribute("color", "lightblue");
 scene.appendChild(sky);
 
+function addController(){
+	controller = document.createElement("a-entity");
+	controller.setAttribute("vive-controls", "hand: left");
+	controller.setAttribute("teleport-controls", "");
+	scene.appendChild(controller);
+}
+
 function addCamera(){
 	camera = document.createElement("a-camera");
 	camera.setAttribute("id", "camera");
@@ -58,7 +93,8 @@ function addCamera(){
 // adding files, probably browser specific but for now focusing on Nightly for link traversal
 function addFiles(){
 	files = document.createElement("a-entity");
-	files.setAttribute("position", "0 0 0");
+	files.setAttribute("position", "0 1 0");
+	files.setAttribute("rotation", "0 30 0");
 	files.setAttribute("layout", "type:cube");
 	files.setAttribute("id", "files");
 	scene.appendChild(files);
@@ -69,7 +105,7 @@ function addFiles(){
 		box = document.createElement("a-box");
 		box.setAttribute("color", "white");
 		box.setAttribute("depth", "0.3");
-		box.setAttribute("position", ""+index*1.1+" 1 -5");
+		box.setAttribute("position", ""+index*1.1+" 1 -2");
 		files.appendChild(box);
 		filename = x[index].href.replace(window.location,"");
 		text = document.createElement("a-entity");
@@ -82,23 +118,39 @@ function addFiles(){
 	}
 }
 
+function addFloor(){
+	var x = document.body.querySelectorAll('[class=file]').length;
+	var y = document.body.querySelectorAll('[class=dir]').length;
+	var width = Math.max(x, y) * 1.2;
+	box = document.createElement("a-box");
+	box.setAttribute("color", "grey");
+	box.setAttribute("width", width);
+	box.setAttribute("depth", "3");
+	box.setAttribute("height", "0.2");
+	box.setAttribute("rotation", "0 30 0");
+	box.setAttribute("position", ""+width/2+" 0 0");
+	scene.appendChild(box);
+}
+
+
 function addParentFolder(){
 	filename = (window.location+"..");
 	box = document.createElement("a-box");
 	box.setAttribute("color", "orange");
+	box.setAttribute("rotation", "0 40 0");
 	box.setAttribute("href", filename );
-	box.setAttribute("position", "0 4 -5");
+	box.setAttribute("position", "-4 1 0");
 	text = document.createElement("a-entity");
 	text.setAttribute("bmfont-text", "text: "+filename);
 	text.setAttribute("position", "-0.5 0.5 0.5");
 	box.appendChild(text);
 	scene.appendChild(box);
-
 }
 
 function addFolders(color){
 	folders = document.createElement("a-entity");
-	folders.setAttribute("position", "0 0.8 0");
+	folders.setAttribute("position", "0 1.8 0");
+	folders.setAttribute("rotation", "0 30 0");
 	folders.setAttribute("layout", "type:cube");
 	folders.setAttribute("id", "folders");
 	scene.appendChild(folders);
@@ -109,7 +161,7 @@ function addFolders(color){
 		box = document.createElement("a-box");
 		box.setAttribute("color", color);
 		box.setAttribute("href", x[index].href );
-		box.setAttribute("position", ""+index*1.1+" -1 -5");
+		box.setAttribute("position", ""+index*1.1+" -1 -2");
 		folders.appendChild(box);
 		filename = x[index].href.replace(window.location,"");
 		text = document.createElement("a-entity");
@@ -128,10 +180,11 @@ function addFolders(color){
  */
 function lateScripts(){
 	latescripts = [
+		"https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js",
 		"https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js",
 		"https://321c4.github.io/aframe-link-demo/js/aframe-hyperlink.js",
-		"https://rawgit.com/ngokevin/kframe/master/components/layout/dist/aframe-layout-component.min.js",
-			// somehow doesn't work
+		// "https://rawgit.com/ngokevin/kframe/master/components/layout/dist/aframe-layout-component.min.js",
+		// somehow works randomly...
 	];
 	index = 0;
 	for( index=0; index < latescripts.length; index++ ) {
@@ -155,6 +208,8 @@ function run () {
 	addCamera();
 	addFiles();
 	addParentFolder();
+	addFloor();
+	addController();
 }
 
 function onError(error) {
@@ -170,3 +225,8 @@ function onGot(item) {
 	addFolders(color);
 }
 
+document.addEventListener("keypress", function(event) {
+	if (event.keyCode == 84) { // 84 = t for traditional
+		console.log('pressed t, should switch back to traditional');
+	}
+})
