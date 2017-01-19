@@ -2,7 +2,7 @@
 
 	"manifest_version": 2,
 	"name": "vrify",
-	"version": "0.2",
+	"version": "0.3",
 
 	"description": "Adds virtual reality interface to your local filesystem.",
 
@@ -15,6 +15,20 @@
 			"matches": ["file:///*"],
 			"js": ["vrify.js"]
 		}
-	]
+	],
+
+	"applications": {
+		"gecko": {
+			"id": "{824605d4-e7d3-4e14-961d-9d6a69a666c2}"
+		}
+	},
+
+	"options_ui": {
+		"page": "options.html"
+	},
+
+	"permissions": ["storage"]
+
+
 
 }

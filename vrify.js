@@ -50,6 +50,7 @@ function addCamera(){
 	scene.appendChild(camera);
 
 	ring = document.createElement("a-ring");
+	ring.setAttribute("position", "0 0 -1");
 	ring.setAttribute("radius-outer", "0.03");
 	ring.setAttribute("radius-inner", "0.02");
 	ring.setAttribute("cursor", "maxDistance: 30; fuse: true;");
@@ -97,7 +98,7 @@ function addParentFolder(){
 
 }
 
-function addFolders(){
+function addFolders(color){
 	folders = document.createElement("a-entity");
 	folders.setAttribute("position", "0 0.8 0");
 	folders.setAttribute("layout", "type:cube");
@@ -108,7 +109,7 @@ function addFolders(){
 	index = 0;
 	for( index=0; index < x.length; index++ ) {
 		box = document.createElement("a-box");
-		box.setAttribute("color", "brown");
+		box.setAttribute("color", color);
 		box.setAttribute("href", x[index].href );
 		box.setAttribute("position", ""+index*1.1+" -1 -5");
 		folders.appendChild(box);
@@ -122,6 +123,7 @@ function addFolders(){
 		box.appendChild(text);
 	}
 }
+
 
 /*
  * trying to add the script later i.e. after the scene has loaded but still unable to register
@@ -146,8 +148,23 @@ if (scene.hasLoaded) {
 }
 
 function run () {
+	var getting = browser.storage.local.get("color");
+	getting.then(onGot, onError);
 	addCamera();
 	addFiles();
-	addFolders();
 	addParentFolder();
 }
+
+function onError(error) {
+	console.log(`Error: ${error}`);
+}
+
+function onGot(item) {
+	var color = "brown";
+	if (item.color) {
+	// doesn't work on older than 52... targets Nightly so should be fine
+		color = item.color;
+	}
+	addFolders(color);
+}
+

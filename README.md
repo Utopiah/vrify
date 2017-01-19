@@ -9,7 +9,9 @@ Adds virtual reality interface to your local filesystem.
 1. [Get the xpi](https://vatelier.net/MyDemo/vrify/vrify-0.2-an%2bfx.xpi)
 1. navigate to file:/// 
 
+## Configuration
+- change the color of the folders via about:addons
+
 ## Limitations
-- tested only on Linux
 - traversal in VR works only on Firefox Nightly
 - replaces your normal file browsing mode
