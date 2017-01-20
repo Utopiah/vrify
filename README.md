@@ -17,3 +17,6 @@ Video: [https://vatelier.net/MyDemo/vrify/vrify.webm](https://vatelier.net/MyDem
 ## Limitations
 - traversal in VR works only on Firefox Nightly
 - replaces your normal file browsing mode
+
+## To do
+- see https://github.com/Utopiah/vrify/wiki
