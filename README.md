@@ -3,9 +3,7 @@ Adds virtual reality interface to your local filesystem.
 
 Video: [https://vatelier.net/MyDemo/vrify/vrify.webm](https://vatelier.net/MyDemo/vrify/vrify.webm)
 
-![before](https://vatelier.net/MyDemo/vrify/before.png)
-![after](https://vatelier.net/MyDemo/vrify/after.png)
-![preview](https://vatelier.net/MyDemo/vrify/preview.jpg)
+![before](https://vatelier.net/MyDemo/vrify/before.png) ![after](https://vatelier.net/MyDemo/vrify/after.png)   ![preview](https://vatelier.net/MyDemo/vrify/preview.jpg)
 
 ## Install
 1. [Get the xpi](https://vatelier.net/MyDemo/vrify/vrify-0.2-an%2bfx.xpi)
