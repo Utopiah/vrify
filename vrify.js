@@ -99,7 +99,7 @@ function addFiles(){
 	files.setAttribute("id", "files");
 	scene.appendChild(files);
 
-	x = document.body.querySelectorAll('[class=file]');
+	x = document.body.querySelectorAll('[class*=file]');
 	index = 0;
 	for( index=0; index < x.length; index++ ) {
 		box = document.createElement("a-box");
@@ -119,8 +119,8 @@ function addFiles(){
 }
 
 function addFloor(){
-	var x = document.body.querySelectorAll('[class=file]').length;
-	var y = document.body.querySelectorAll('[class=dir]').length;
+	var x = document.body.querySelectorAll('[class*=file]').length;
+	var y = document.body.querySelectorAll('[class*=dir]').length;
 	var width = Math.max(x, y) * 1.2;
 	box = document.createElement("a-box");
 	box.setAttribute("color", "grey");
@@ -155,7 +155,7 @@ function addFolders(color){
 	folders.setAttribute("id", "folders");
 	scene.appendChild(folders);
 
-	x = document.body.querySelectorAll('[class=dir]');
+	x = document.body.querySelectorAll('[class*=dir]');
 	index = 0;
 	for( index=0; index < x.length; index++ ) {
 		box = document.createElement("a-box");
@@ -203,8 +203,12 @@ if (scene.hasLoaded) {
 }
 
 function run () {
-	var getting = browser.storage.local.get("color");
-	getting.then(onGot, onError);
+	if (typeof browser !== 'undefined'){
+		var getting = browser.storage.local.get("color");
+		getting.then(onGot, onError);
+	} else {
+		addFolders("brown");
+	}
 	addCamera();
 	addFiles();
 	addParentFolder();
