@@ -1,5 +1,7 @@
 # vrify
-Adds virtual reality interface to your local filesystem.
+Adds virtual reality interface to your local (and remote, if you mount it) filesystem.
+
+![cloud](https://vatelier.net/MyDemo/vrify/vrify_cloud.gif)
 
 Video: [https://vatelier.net/MyDemo/vrify/vrify.webm](https://vatelier.net/MyDemo/vrify/vrify.webm)
 
